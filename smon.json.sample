@@ -1,0 +1,21 @@
+[
+    {
+        "checker": "LocalIP",
+        "interval": "5s"        
+    },
+    {
+        "checker": "LookupHost",
+        "arg": "www.google.com",
+        "interval": "7s"
+    },
+    {
+        "checker": "WGet",
+        "arg": "http://www.google.com/",
+        "interval": "11s"
+    },
+    {
+        "checker": "TraceRoute",
+        "arg": "www.google.com",
+        "interval": "1m"
+    }
+]

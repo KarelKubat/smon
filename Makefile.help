@@ -1,0 +1,4 @@
+Make what? Choose one of:
+
+make pi3  -- `go build` for Raspberry Pi 3
+make here -- `go build` for this platform
