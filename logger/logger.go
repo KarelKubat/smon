@@ -17,7 +17,9 @@ var (
 func Error(s string) {
 	log.SetOutput(os.Stderr)
 	for _, part := range strings.Split(s, "\n") {
-		log.Printf("ERROR: %v", part)
+		if part != "" {
+			log.Printf("ERROR: %v", part)
+		}
 	}
 }
 
@@ -30,7 +32,9 @@ func Errorf(f string, args ...interface{}) {
 func Fatal(s string) {
 	log.SetOutput(os.Stderr)
 	for _, part := range strings.Split(s, "\n") {
-		log.Printf("FATAL: %v", part)
+		if part != "" {
+			log.Printf("FATAL: %v", part)
+		}
 	}
 	os.Exit(1)
 }
@@ -40,18 +44,30 @@ func Fatalf(f string, args ...interface{}) {
 	Fatal(fmt.Sprintf(f, args...))
 }
 
-// Info sends an informational message to the logger.
+// Info sends an informational message to the logger when verbosity is turned on.
 func Info(s string) {
 	if !*verbose {
 		return
 	}
-	log.SetOutput(os.Stdout)
-	for _, part := range strings.Split(s, "\n") {
-		log.Printf("INFO: %v", part)
-	}
+	Msg(s)
 }
 
 // Infof is like Info, but uses printf-like expansion.
 func Infof(f string, args ...interface{}) {
 	Info(fmt.Sprintf(f, args...))
+}
+
+// Msg sends an informational message, regardless of verbosity.
+func Msg(s string) {
+	log.SetOutput(os.Stdout)
+	for _, part := range strings.Split(s, "\n") {
+		if part != "" {
+			log.Printf("INFO: %v", part)
+		}
+	}
+}
+
+// Msgf is like Msg, but uses printf-like expansion.
+func Msgf(f string, args ...interface{}) {
+	Msg(fmt.Sprintf(f, args...))
 }

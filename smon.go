@@ -45,6 +45,7 @@ func main() {
 	if flag.NArg() != 1 {
 		logger.Fatal(usage)
 	}
+	logger.Msg("starting")
 	js, err := ioutil.ReadFile(flag.Arg(0))
 	if err != nil {
 		logger.Fatalf("cannot read config file %v: %v", flag.Arg(0), err)

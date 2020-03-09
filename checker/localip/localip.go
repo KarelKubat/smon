@@ -26,6 +26,7 @@ func (l *LocalIP) Name() string {
 
 // Run implements checker.Interface.
 func (l *LocalIP) Run() (checker.Outcome, error) {
+	// This doesn't actually connect, just checks from where we would dial.
 	conn, err := net.Dial("udp", "8.8.8.8:80")
 	if err != nil {
 		return checker.Failure, err
