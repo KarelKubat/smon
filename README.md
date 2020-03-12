@@ -6,14 +6,23 @@ monitoring.
 
 ## Invoking smon & checkers
 
-The invocation is very simple:
+The invocation is very simple. In its most basic form, just run:
 
 ```shell
 smon CONFIG.json
 ```
 
-starts service checkers that `CONFIG.json` requests. At the time of writing
-the following checkers exist:
+This starts the service checkers that `CONFIG.json` requests. You can try
+`smon --help` to see relevant flags. For example,
+
+```shell
+smon -p 8080 CONFIG.json
+```
+
+will fire up a simple HTTP server on port 8080 where you can point your
+browser to see some results.
+
+At the time of writing the following checkers exist:
 
 * Is there a local IP address (other than loopback)? If no, the WiFi may be
    down, its DHCP may be unreachable or not working.

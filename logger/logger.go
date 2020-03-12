@@ -19,7 +19,7 @@ const (
 )
 
 var (
-	verbose     = flag.Bool("v", false, "more logging")
+	verbose     = flag.Bool("v", false, "more logging (only useful for debugging)")
 	linesToKeep = flag.Int("l", 512,
 		"log entries to keep in memory for reporting (useful with reporting server)")
 
