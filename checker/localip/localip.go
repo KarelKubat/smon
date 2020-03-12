@@ -34,6 +34,6 @@ func (l *LocalIP) Run() (checker.Outcome, error) {
 	defer conn.Close()
 
 	addr := conn.LocalAddr().(*net.UDPAddr)
-	logger.Infof("LocalIP: %v", addr)
+	logger.Std.Infof("LocalIP: %v", addr)
 	return checker.Success, nil
 }

@@ -34,6 +34,6 @@ func (w *WGet) Run() (checker.Outcome, error) {
 		return checker.Failure, err
 	}
 	defer resp.Body.Close()
-	logger.Infof("WGet: %s succeeded", w.URL)
+	logger.Std.Infof("WGet: %s succeeded", w.URL)
 	return checker.Success, nil
 }

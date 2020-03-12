@@ -51,7 +51,7 @@ func (d *Dummy) Run() (checker.Outcome, error) {
 		outcome = checker.Success
 	}
 
-	logger.Infof("Dummy: will return %v after %v", outcome, sleepDuration)
+	logger.Std.Infof("Dummy: will return %v after %v", outcome, sleepDuration)
 	time.Sleep(sleepDuration)
 	return outcome, nil
 }

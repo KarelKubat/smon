@@ -39,7 +39,7 @@ func New(streamer *reportstreamer.ReportStreamer) *Monitor {
 		reportChannel:  make(chan *result.Result),
 		reportStreamer: streamer,
 	}
-	logger.Info("monitor: instantiated")
+	logger.Std.Info("monitor: instantiated")
 	return m
 }
 
@@ -58,7 +58,7 @@ func (m *Monitor) Schedule(req *Request) error {
 			req.Checker.Name(), req.MaxRunTime, req.Interval)
 	}
 
-	logger.Infof("monitor: scheduling %q", req.Checker.Name())
+	logger.Std.Infof("monitor: scheduling %q", req.Checker.Name())
 	go m.start(req)
 	return nil
 }
@@ -74,7 +74,7 @@ func (m *Monitor) start(req *Request) {
 	lastOutcome := checker.Undefined
 	for {
 		// Run the checker, send its output to the result stream.
-		logger.Infof("monitor: invoking %q", req.Checker.Name())
+		logger.Std.Infof("monitor: invoking %q", req.Checker.Name())
 
 		resultChan := make(chan checkerResult)
 		timeoutChan := time.NewTimer(req.MaxRunTime)
@@ -87,7 +87,7 @@ func (m *Monitor) start(req *Request) {
 			defer func() {
 				// resultChan may be closed when the checkerResult is sent, causing a panic.
 				if r := recover(); r != nil {
-					logger.Errorf("%v exceeded maxruntime", req.Checker.Name())
+					logger.Std.Errorf("%v exceeded maxruntime", req.Checker.Name())
 				}
 			}()
 			resultChan <- checkerResult{

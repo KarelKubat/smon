@@ -17,7 +17,7 @@ func New(r reporter.Reporter) *ReportStreamer {
 	s := &ReportStreamer{
 		reporter: r,
 	}
-	logger.Info("reporstreamer: instantiated")
+	logger.Std.Info("reporstreamer: instantiated")
 	return s
 }
 
@@ -25,7 +25,7 @@ func New(r reporter.Reporter) *ReportStreamer {
 func (r *ReportStreamer) Handle(stream chan *result.Result) {
 	for report := range stream {
 		if err := r.reporter.Report(report); err != nil {
-			logger.Errorf("reportstreamer: %v", err)
+			logger.Std.Errorf("reportstreamer: %v", err)
 		}
 	}
 }

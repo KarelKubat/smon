@@ -31,7 +31,7 @@ func (l *LookupHost) Name() string {
 func (l *LookupHost) Run() (checker.Outcome, error) {
 	addrs, err := net.LookupHost(l.hostname)
 	if err == nil {
-		logger.Infof("LookupHost: %s -> %v", l.hostname, addrs)
+		logger.Std.Infof("LookupHost: %s -> %v", l.hostname, addrs)
 		return checker.Success, nil
 	}
 	return checker.Failure, err

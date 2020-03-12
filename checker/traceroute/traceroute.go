@@ -46,6 +46,6 @@ func (t *TraceRoute) Run() (checker.Outcome, error) {
 	if err := cmd.Run(); err != nil {
 		return checker.Failure, fmt.Errorf("TraceRoute: failed with %v, stdout/stderr: [%v] [%v]", err, stdout.String(), stderr.String())
 	}
-	logger.Infof("Traceroute: %s -> %s", t.hostname, stdout.String())
+	logger.Std.Infof("Traceroute: %s -> %s", t.hostname, stdout.String())
 	return checker.Success, nil
 }

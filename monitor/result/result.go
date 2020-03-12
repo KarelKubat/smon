@@ -20,12 +20,12 @@ type Result struct {
 
 // String returns a string representation of a Result.
 func (r *Result) String() string {
-	s := r.Start.Format("2006/01/02 15:04:05") + fmt.Sprintf(" %q: ", r.Name)
+	s := fmt.Sprintf("%s: ", r.Name)
 	switch {
 	case r.SchedulerErr != nil:
-		return s + fmt.Sprintf("SCHEDULER: %v", r.SchedulerErr)
+		return s + fmt.Sprintf("SCHEDULER-ERROR: %v", r.SchedulerErr)
 	case r.CheckerErr != nil:
-		return s + fmt.Sprintf("FAILURE: checker: %v", r.CheckerErr)
+		return s + fmt.Sprintf("CHECKER-ERROR: %v", r.CheckerErr)
 	default:
 		return s + fmt.Sprintf("%v (after %v)", r.Outcome, r.Duration)
 	}
