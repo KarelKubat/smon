@@ -4,9 +4,10 @@ package traceroute
 import (
 	"bytes"
 	"fmt"
+	"os/exec"
 	"smon/checker"
 	"smon/logger"
-	"os/exec"
+	"strings"
 )
 
 const (
@@ -21,7 +22,7 @@ type TraceRoute struct {
 // Arg implements checker.Interface.
 func (t *TraceRoute) Arg(s string) error {
 	if s == "" {
-		return fmt.Errorf("TraceRoute requires an argument (hostname)")		
+		return fmt.Errorf("TraceRoute requires an argument (hostname)")
 	}
 	t.hostname = s
 	return nil
@@ -30,6 +31,21 @@ func (t *TraceRoute) Arg(s string) error {
 // Name implements checker.Interface.
 func (t *TraceRoute) Name() string {
 	return fmt.Sprintf("TraceRoute %s", t.hostname)
+}
+
+// collect is a helper to make stdout/stderr outputs more readable.
+func collect(stdout, stderr string) string {
+	report := ""
+	if stdout != "" {
+		report = fmt.Sprintf("stdout: [%s]", strings.Join(strings.Split(strings.TrimSuffix(stdout, "\n"), "\n"), " "))
+	}
+	if stderr != "" {
+		if report != "" {
+			report += ", "
+		}
+		report += fmt.Sprintf("stderr: [%s]", strings.Join(strings.Split(strings.TrimSuffix(stderr, "\n"), "\n"), " "))
+	}
+	return report
 }
 
 // Run implements checker.Interface.
@@ -44,7 +60,7 @@ func (t *TraceRoute) Run() (checker.Outcome, error) {
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
 	if err := cmd.Run(); err != nil {
-		return checker.Failure, fmt.Errorf("TraceRoute: failed with %v, stdout/stderr: [%v] [%v]", err, stdout.String(), stderr.String())
+		return checker.Failure, fmt.Errorf("TraceRoute: failed with %v, %s", err, collect(stdout.String(), stderr.String()))
 	}
 	logger.Std.Infof("Traceroute: %s -> %s", t.hostname, stdout.String())
 	return checker.Success, nil
